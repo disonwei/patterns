@@ -1,40 +1,81 @@
-class MilkTea{
-    private type:string;
+// 1.  分布构建复制对象
 
-    private size:string;
+class bookBuilder {
+  private name = "";
+  private price = 0;
+  private author = "";
+  private category = "";
 
-    private pearl:boolean;
+  // constructor(){
+  //     this.name="",
+  //     this.price=0,
+  //     this.author="",
+  //     this.category=""
+  // }
 
-    private ice:boolean;
+  setName(name: string) {
+    this.name = name;
+    return this;
+  }
 
-    private constructor(type:string,size:string,pearl:boolean,ice:boolean){
-        this.type=type;
-        this.size=size;
-        this.pearl=pearl;
-        this.ice=ice;
-    }
+  setPrice(price: number) {
+    this.price = price;
+    return this;
+  }
 
+  setAuthor(author: string) {
+    this.author = author;
+    return this;
+  }
 
-    public getType(type:string){
-        this.type=type;
-    }
-    public getSize(size:string){
-        this.size=size;
-    }
-    public getPearl(pearl:boolean){
-        this.pearl=pearl;
-    }
-    public getIce(ice:boolean){
-        this.ice=ice;
-    }
+  setCategoty(category: string) {
+    this.category = category;
+    return this;
+  }
 
+  public build() {
+    return {
+      name: this.name,
+      author: this.author,
+      price: this.price,
+      category: this.category,
+    };
+    // return this
+  }
 }
 
-class Builder{
+const book = new bookBuilder()
+  .setAuthor("dison")
+  .setName("书名")
+  .setPrice(10)
+  .setCategoty("英语")
+  .build();
 
-    constructor(){
 
-}
+  console.log(book);
+  console.log(typeof(book));
+  console.log(book.toString());
+  
+  
+//   2. 
+  
+class BaseBuilder{
 
+    init(){
+        Object.keys(this).forEach((key:string)=>{
+            const withNames=`with${key.substring(0,1).toUpperCase()}${key.substring(1)}`
+
+            this[withNames]=(value:string)=>{
+                this[key]=value;
+                return this;
+            }
+        })
+    }
+
+    build(){
+        const keysNoWithers=Object.keys(this).filter((key:string)=>{
+                typeof(this[key]) !=="function"
+        })
+    }
 
 }
